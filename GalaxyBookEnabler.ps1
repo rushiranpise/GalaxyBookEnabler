@@ -391,7 +391,7 @@ if ($CoreInstall) {
         }
 
   
-        $UserPrompt = Read-Host "Select a package to install (or 5 to finish selection)"
+        $UserPrompt = Read-Host "Select a package to install (or 15 to finish selection)"
 
 
         
