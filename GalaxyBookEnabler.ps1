@@ -368,7 +368,7 @@ if ($CoreInstall) {
         # Print currently selected packages
         Write-Output "Selected packages: $($selectedPackages -join ', ')"
         Write-Output ""         
-
+        $packageOptions = @{
     '1' = 'Multi Control'
     '2' = 'Quick Share'
     '3' = 'Samsung Notes'
