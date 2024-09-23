@@ -4,7 +4,7 @@ Import-Module ScheduledTasks
 $Username = [System.Environment]::UserName
 $UserFolder = "C:\Users\$Username"
 $GalaxyBookEnablerDirectory = Join-Path -Path $UserFolder -ChildPath 'GalaxyBookEnablerScript'
-$BatchFilePath = Join-Path -Path $GalaxyBookEnablerDirectory -ChildPath 'QS.bat'
+$BatchFilePath = Join-Path -Path $GalaxyBookEnablerDirectory -ChildPath 'Galaxy_Book4_Ultra_Spoofer.bat'
 $firstrun = $true
 $TaskName = "GalaxyBookEnabler"
 
@@ -38,9 +38,19 @@ function InstallPackage($packageName, $packageId) {
 
 # Function to install all packages
 function InstallAllPackages {
-    InstallPackage 'Samsung Multi Control' '9N3L4FZ03Q99'
+    InstallPackage 'Galaxy Buds' '9NHTLWTKFZNB'
+    InstallPackage 'Multi Control' '9N3L4FZ03Q99'
     InstallPackage 'Quick Share' '9PCTGDFXVZLJ'
+    InstallPackage 'Samsung Device Care' '9NBLGGH4XDV0'
+    InstallPackage 'Samsung Flow' '9NBLGGH5GB0M'
+    InstallPackage 'Samsung Gallery' '9NBLGGH4N9R9'
     InstallPackage 'Samsung Notes' '9NBLGGH43VHV'
+    InstallPackage 'Samsung Phone' 'MWJXXLCHBGK'
+    InstallPackage 'Samsung Printer Experience' '9WZDNCRFHWGG'
+    InstallPackage 'Samsung Screen Recorder' '9P5025MM7WDT'
+    InstallPackage 'Samsung Studio' '9p312b4tzffh'
+    InstallPackage 'Second Screen' '9PLTXW5DX5KB'
+    InstallPackage 'SmartThings' '9N3ZBH5V7HX6'
 }
 
 
@@ -92,10 +102,10 @@ if (-not $isAdmin) {
     Write-Output "" 
 }
 
-# Check if the QS.bat file already exists in the GalaxyBookEnabler directory
+# Check if the Galaxy_Book4_Ultra_Spoofer.bat file already exists in the GalaxyBookEnabler directory
 if (Test-Path -Path $BatchFilePath) {
-    Write-Output "The QS.bat file is already present in the GalaxyBookEnabler directory."
-    Write-Log "The QS.bat file is already present in the GalaxyBookEnabler directory."
+    Write-Output "The Galaxy_Book4_Ultra_Spoofer.bat file is already present in the GalaxyBookEnabler directory."
+    Write-Log "The Galaxy_Book4_Ultra_Spoofer.bat file is already present in the GalaxyBookEnabler directory."
     $firstrun = $false
 }
 
@@ -187,8 +197,8 @@ try {
 }
 
 # Define the source path for the batch file (assuming it's in the same directory as the script)
-$SourceBatchFilePath = Join-Path -Path $PSScriptRoot -ChildPath 'QS.bat'
-$BatchFilePath = Join-Path -Path $GalaxyBookEnablerDirectory -ChildPath 'QS.bat'
+$SourceBatchFilePath = Join-Path -Path $PSScriptRoot -ChildPath 'Galaxy_Book4_Ultra_Spoofer.bat'
+$BatchFilePath = Join-Path -Path $GalaxyBookEnablerDirectory -ChildPath 'Galaxy_Book4_Ultra_Spoofer.bat'
 
 # Check if the source and destination paths are the same if second time running
 $sourceContentHash = Get-FileHash -Path $SourceBatchFilePath -Algorithm SHA256 | Select-Object -ExpandProperty Hash
@@ -278,19 +288,35 @@ try{
 
         # Define software package options
         $packageOptions = [ordered]@{
-            '1' = @{
-                Name = "Samsung Continuity Service"
-                Id = "9P98T77876KZ"
-            }
-            '2' = @{
-                Name = "Samsung Account"
-                Id = "9NGW9K44GQ5F"
-            }
-            '3' = @{
-                Name = "Samsung Cloud Assistant"
-                Id = "9NFWHCHM52HQ"
-            }
-        }
+    '1' = @{
+        Name = "Samsung Continuity Service"
+        Id = "9P98T77876KZ"
+    }
+    '2' = @{
+        Name = "Samsung Account"
+        Id = "9NGW9K44GQ5F"
+    }
+    '3' = @{
+        Name = "Samsung Cloud Assistant"
+        Id = "9NFWHCHM52HQ"
+    }
+    '4' = @{
+        Name = "Samsung Bluetooth Sync"
+        Id = "9NJNNJTTFL45"
+    }
+    '5' = @{
+        Name = "Samsung Settings"
+        Id = "9P2TBWSHK6HJ"
+    }
+    '6' = @{
+        Name = "Samsung Settings Runtime"
+        Id = "9NL68DVFP841"
+    }
+    '7' = @{
+        Name = "Samsung Update"
+        Id = "9NQ3HDB99VBF"
+    }
+}
 
         # Display package options
         Write-Output ""
@@ -342,12 +368,22 @@ if ($CoreInstall) {
         # Print currently selected packages
         Write-Output "Selected packages: $($selectedPackages -join ', ')"
         Write-Output ""         
-        $packageOptions = @{
-            '1' = 'Samsung Multi Control'
-            '2' = 'Quick Share'
-            '3' = 'Samsung Notes'
-            '4' = 'All'
-            '5' = 'Finish selection'
+
+    '1' = 'Multi Control'
+    '2' = 'Quick Share'
+    '3' = 'Samsung Notes'
+    '4' = 'Samsung Device Care'
+    '5' = 'Samsung Flow'
+    '6' = 'Samsung Gallery'
+    '7' = 'Samsung Phone'
+    '8' = 'Samsung Printer Experience'
+    '9' = 'Samsung Screen Recorder'
+    '10' = 'Samsung Studio'
+    '11' = 'Second Screen'
+    '12' = 'SmartThings'
+    '13' = 'Galaxy Buds'
+    '14' = 'All'
+    '15' = 'Finish selection'
         }
 
         foreach ($key in ($packageOptions.Keys | Sort-Object)) {
@@ -364,30 +400,101 @@ if ($CoreInstall) {
 # Validate user input
 if ($UserPrompt -in $packageOptions.Keys){
     switch ($UserPrompt) {
-        '1' {
-            if ('Samsung Multi Control' -in $selectedPackages) {
-                $selectedPackages = $selectedPackages -ne 'Samsung Multi Control'
-            } else {
-                $selectedPackages += 'Samsung Multi Control'
-            }
-        }
-        '2' {
-            if ('Quick Share' -in $selectedPackages) {
-                $selectedPackages = $selectedPackages -ne 'Quick Share'
-            } else {
-                $selectedPackages += 'Quick Share'
-            }
-        }
-        '3' {
-            if ('Samsung Notes' -in $selectedPackages) {
-                $selectedPackages = $selectedPackages -ne 'Samsung Notes'
-            } else {
-                $selectedPackages += 'Samsung Notes'
-            }
-        }
-        '4' {
+'1' {
+    if ('Multi Control' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Multi Control'
+    } else {
+        $selectedPackages += 'Multi Control'
+    }
+}
+'2' {
+    if ('Quick Share' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Quick Share'
+    } else {
+        $selectedPackages += 'Quick Share'
+    }
+}
+'3' {
+    if ('Samsung Notes' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Samsung Notes'
+    } else {
+        $selectedPackages += 'Samsung Notes'
+    }
+}
+'4' {
+    if ('Galaxy Buds' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Galaxy Buds'
+    } else {
+        $selectedPackages += 'Galaxy Buds'
+    }
+}
+'5' {
+    if ('Samsung Device Care' -in $selectedPackages) {
+'Samsung Device Care'
+    } else {
+        $selectedPackages += 'Samsung Device Care'
+    }
+}
+'6' {
+    if ('Samsung Flow' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Samsung Flow'
+    } else {
+        $selectedPackages += 'Samsung Flow'
+    }
+}
+'7' {
+    if ('Samsung Gallery' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Samsung Gallery'
+    } else {
+'Samsung Gallery'
+    }
+}
+'8' {
+    if ('Samsung Phone' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Samsung Phone'
+    } else {
+        $selectedPackages += 'Samsung Phone'
+    }
+}
+'9' {
+    if ('Samsung Printer Experience' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Samsung Printer Experience'
+    } else {
+'Samsung Printer Experience'
+    }
+}
+'10' {
+    if ('Samsung Screen Recorder' -in $selectedPackages) {
+'Samsung Screen Recorder'
+    } else {
+'Samsung Screen Recorder'
+    }
+}
+'11' {
+    if ('Samsung Studio' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Samsung Studio'
+    } else {
+'Samsung Studio'
+    }
+}
+'12' {
+    if ('Second Screen' -in $selectedPackages) {
+        $selectedPackages = $selectedPackages -ne 'Second Screen'
+    } else {
+'Second Screen'
+    }
+}
+'13' {
+    if ('SmartThings' -in $selectedPackages) {
+'SmartThings'
+    } else {
+'SmartThings'
+    }
+}
+
+        '14' {
             # Define all packages
-            $allPackages = @('Samsung Multi Control', 'Quick Share', 'Samsung Notes')
+            $allPackages = @('Galaxy Buds','Multi Control','Quick Share','Samsung Device Care','Samsung Flow','Samsung Gallery','Samsung Notes','Samsung Phone','Samsung Printer Experience','Samsung Screen Recorder','Samsung Studio','Second Screen','SmartThings')
         
             # Iterate over all packages
             foreach ($package in $allPackages) {
@@ -398,12 +505,12 @@ if ($UserPrompt -in $packageOptions.Keys){
                 }
             }
         }
-        '5' {
+        '15' {
             Write-Output "Finishing package selection."
         }
     }          
 }
-    } while  ($UserPrompt -ne '5')
+    } while  ($UserPrompt -ne '15')
 
     # Install selected packages
     if ($selectedPackages.Count -gt 0) {
@@ -411,15 +518,45 @@ if ($UserPrompt -in $packageOptions.Keys){
         Write-Output "Installing selected packages..."
         foreach ($package in $selectedPackages) {
             switch ($package) {
-                'Samsung Multi Control' {
-                    InstallPackage 'Samsung Multi Control' '9N3L4FZ03Q99'
-                }
-                'Quick Share' {
-                    InstallPackage 'Quick Share' '9PCTGDFXVZLJ'
-                }
-                'Samsung Notes' {
-                    InstallPackage 'Samsung Notes' '9NBLGGH43VHV'
-                }
+            'Multi Control' {
+                InstallPackage 'Multi Control' '9N3L4FZ03Q99'
+            }
+            'Quick Share' {
+                InstallPackage 'Quick Share' '9PCTGDFXVZLJ'
+            }
+            'Samsung Notes' {
+                InstallPackage 'Samsung Notes' '9NBLGGH43VHV'
+            }
+            'Galaxy Buds' {
+                InstallPackage 'Galaxy Buds' '9NHTLWTKFZNB'
+            }
+            'Samsung Device Care' {
+                InstallPackage 'Samsung Device Care' '9NBLGGH4XDV0'
+            }
+            'Samsung Flow' {
+                InstallPackage 'Samsung Flow' '9NBLGGH5GB0M'
+            }
+            'Samsung Gallery' {
+                InstallPackage 'Samsung Gallery' '9NBLGGH4N9R9'
+            }
+            'Samsung Phone' {
+                InstallPackage 'Samsung Phone' 'MWJXXLCHBGK'
+            }
+            'Samsung Printer Experience' {
+                InstallPackage 'Samsung Printer Experience' '9WZDNCRFHWGG'
+            }
+            'Samsung Screen Recorder' {
+                InstallPackage 'Samsung Screen Recorder' '9P5025MM7WDT'
+            }
+            'Samsung Studio' {
+                InstallPackage 'Samsung Studio' '9p312b4tzffh'
+            }
+            'Second Screen' {
+                InstallPackage 'Second Screen' '9PLTXW5DX5KB'
+            }
+            'SmartThings' {
+                InstallPackage 'SmartThings' '9N3ZBH5V7HX6'
+            }
             }
         }
     } else {
